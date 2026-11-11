@@ -1,0 +1,39 @@
+@page "/Login"
+@using Microsoft.AspNetCore.Authorization
+@attribute [AllowAnonymous]
+
+<PageTitle>Login</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        <h3>Welcome, @context.User.Identity?.Name!</h3>
+        <p>
+            You are successfully authenticated.
+            @if (context.User.IsInRole(AuthConstants.AdminRole))
+            {
+                <span class="badge bg-success">Admin</span>
+            }
+        </p>
+        <form action="account/logout" method="post">
+            <AntiforgeryToken />
+            <button type="submit" class="btn btn-danger">Sign Out</button>
+        </form>
+    </Authorized>
+    <NotAuthorized>
+        <h3>Please log in</h3>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+            @* data-enhance-nav="false": this link leaves the site (Microsoft login), so do a normal page load *@
+            <a href="@($"account/login-entra?returnUrl={Uri.EscapeDataString(SafeReturnUrl)}")"
+               class="btn btn-primary" data-enhance-nav="false">Sign in with Microsoft (admins)</a>
+            <a href="@($"local-login?ReturnUrl={Uri.EscapeDataString(SafeReturnUrl)}")"
+               class="btn btn-outline-primary">Log in with username and password</a>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    [SupplyParameterFromQuery(Name = "ReturnUrl")]
+    private string? ReturnUrl { get; set; }
+
+    private string SafeReturnUrl => AuthConstants.SafeReturnUrl(ReturnUrl);
+}

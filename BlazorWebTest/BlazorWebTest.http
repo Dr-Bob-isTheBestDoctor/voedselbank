@@ -1,0 +1,17 @@
+### Test the JWT API (open this file in Rider / Visual Studio / VS Code with the REST Client extension)
+### Run the app with the "https" profile first.
+
+@host = https://localhost:7166
+
+### 1. Log in as a local (MySQL) user -> copy the "token" from the response
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "Password123!"
+}
+
+### 2. Call a protected endpoint with that token (paste it after "Bearer ")
+GET {{host}}/api/auth/me
+Authorization: Bearer PASTE_TOKEN_HERE

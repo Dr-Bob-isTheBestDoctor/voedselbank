@@ -1,0 +1,9 @@
+@page "/access-denied"
+@using Microsoft.AspNetCore.Authorization
+@attribute [AllowAnonymous]
+
+<PageTitle>Access denied</PageTitle>
+
+<h3>Access denied</h3>
+<p>You don't have permission to view this page. Admin pages require signing in with Microsoft.</p>
+<a href="Login" class="btn btn-outline-primary">Log in with another account</a>
