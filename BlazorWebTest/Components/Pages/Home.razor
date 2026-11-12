@@ -1,8 +1,55 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Rendering
+@rendermode InteractiveServer
 @attribute [AllowAnonymous]
+
 <PageTitle>Dagoverzicht</PageTitle>
 
 <h1>Dagoverzicht</h1>
 
 Welcome to your new app.
+
+<button class="btn btn-primary oproepbtn" @onclick="AddNewOproep">
+    Oproep plaatsen
+</button>
+
+<div class="oproepdiv">
+    @DynamicContent
+    <div class="ImageOproep">
+        <div class="OproepBanner">
+            <h1>uitdelen van voedsel</h1>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<string> Oproepen = new();
+
+    private RenderFragment DynamicContent => builder =>
+    {
+        int seq = 0;
+
+        foreach (var oproep in Oproepen)
+        {
+            AddOproep(builder, oproep, "ImageOproep", ref seq);
+        }
+    };
+
+    private void AddNewOproep()
+    {
+        Oproepen.Add($"Oproep {Oproepen.Count + 1}");
+    }
+
+    private void AddOproep(
+        RenderTreeBuilder builder,
+        string content,
+        string cssClass,
+        ref int seq)
+    {
+        builder.OpenElement(seq++, "div");
+        builder.AddAttribute(seq++, "class", cssClass);
+        builder.AddContent(seq++, content);
+        builder.CloseElement();
+    }
+}
