@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Rendering
+@using Microsoft.EntityFrameworkCore.ValueGeneration.Internal
+@using Microsoft.Identity.Client
 @rendermode InteractiveServer
 @attribute [AllowAnonymous]
 
@@ -16,6 +18,22 @@ Welcome to your new app.
 
 <div class="oproepdiv">
     @DynamicContent
+    <div class="TextOproep">
+        <div class="OproepBanner">
+            <h1>uitdelen van voedsel</h1>
+        </div>
+        <div class="TxtOproepInfo">
+            <div class="vline">
+                <h1 class="datumtext">Donderdag 14:00-16:00</h1>
+            </div>
+            <div class="positionsavailable">
+                <h1 class="positionTxt">1 van 4 plekken bezet</h1>
+                <button class="Registerbtn">
+                    Aanmelden
+                </button>
+            </div>
+        </div>
+    </div>
     <div class="ImageOproep">
         <div class="OproepBanner">
             <h1>uitdelen van voedsel</h1>
@@ -32,7 +50,8 @@ Welcome to your new app.
 
         foreach (var oproep in Oproepen)
         {
-            AddOproep(builder, oproep, "ImageOproep", ref seq);
+            //AddOproep(builder, oproep, "ImageOproep", ref seq);
+            Website.MaakOproep(false, "Test", "", builder, ref seq);
         }
     };
 
@@ -40,16 +59,16 @@ Welcome to your new app.
     {
         Oproepen.Add($"Oproep {Oproepen.Count + 1}");
     }
-
-    private void AddOproep(
-        RenderTreeBuilder builder,
-        string content,
-        string cssClass,
-        ref int seq)
-    {
-        builder.OpenElement(seq++, "div");
-        builder.AddAttribute(seq++, "class", cssClass);
-        builder.AddContent(seq++, content);
-        builder.CloseElement();
-    }
+    /*
+        private void AddOproep(
+            RenderTreeBuilder builder,
+            string content,
+            string cssClass,
+            ref int seq)
+        {
+            builder.OpenElement(seq++, "div");
+            builder.AddAttribute(seq++, "class", cssClass);
+            builder.AddContent(seq++, content);
+            builder.CloseElement();
+        }*/
 }
