@@ -59,3 +59,9 @@ Microsoft.Identity.Client.Broker" Version="4.92.0" />
 Microsoft.Identity.Web Version=4.18.0
 
 Microsoft.Identity.Web.UI Version=4.18.0
+
+Pomelo.EntityFrameworkCore.MySql Version=9.0.0
+   
+Microsoft.AspNetCore.Identity.EntityFrameworkCore Version=9.0.17
+
+Microsoft.EntityFrameworkCore.Design Version=9.0.17
